@@ -42,20 +42,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getSupportActionBar().hide();
-
         init();
-
-        prepareWifi();
-
+        checkPermissions();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        scanWifi();
+        //scanWifi();
     }
 
     private void init() {
@@ -67,11 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifiInfo = wifiManager.getConnectionInfo();
-
-
         checkWifi();
-        checkPermissions();
-
+        scanWifi();
     }
 
     private void checkPermissions() {
@@ -81,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},0);
             }
         else {
-            scanWifi();
+            prepareWifi();
         }
     }
 
@@ -141,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            scanWifi();
+            prepareWifi();
         }
     }
 
